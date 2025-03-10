@@ -17,7 +17,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       </MyButton>
       <MyButton onPress={() => navigation.navigate("Audio")}>Go Audio</MyButton>
       <MyButton onPress={() => navigation.navigate("Files")}>Go Files</MyButton>
-      <MyButton>Go Notification</MyButton>
+      <MyButton onPress={() => navigation.navigate("Notification")}>
+        Go Notification
+      </MyButton>
     </SafeAreaView>
   );
 };

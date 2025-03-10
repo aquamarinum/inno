@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "239474534351",
+    "project_id": "notifki",
+    "storage_bucket": "notifki.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239474534351:android:c7bff00d12317f34b354ba",
+        "android_client_info": {
+          "package_name": "com.mezarine.internshipa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzFKD79HgZXmoEm3Nn0p0DVWpLRQlqg0c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239474534351:android:be70482c4706df1cb354ba",
+        "android_client_info": {
+          "package_name": "com.verstka"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzFKD79HgZXmoEm3Nn0p0DVWpLRQlqg0c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,27 +1,48 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Button,
+  Dimensions,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MyButton from "@/components/MyButton";
 import Title from "@/components/Title";
 import * as DocumentPicker from "expo-document-picker";
 import { WebView } from "react-native-webview";
+import * as FileSystem from "expo-file-system";
 
 type Props = {};
 
 const FileScreen = () => {
-  const [pdfUri, setPdfUri] = useState<string | null>(null);
+  const [fileUri, setFileUri] = useState<string | undefined>(undefined);
+  const [fileContent, setFileContent] = useState<string | null>(null);
 
-  const pickPdf = async () => {
+  const pickDocument = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: "application/pdf",
+        type: "*/*",
       });
 
+      if (result.canceled || !result.assets) return;
+
+      const uri = result.assets[0].uri;
+      console.log("Выбранный файл:", uri);
+
+      const content = await FileSystem.readAsStringAsync(uri, {
+        encoding: FileSystem.EncodingType.UTF8,
+      });
+
+      setFileContent(content);
+
       if (!result.canceled && result.assets.length > 0) {
-        setPdfUri(result.assets[0].uri);
+        setFileUri(result.assets[0].uri);
       }
     } catch (error) {
-      console.error("Ошибка выбора PDF:", error);
+      Alert.alert("Ошибка", "Не удалось открыть файл.");
+      console.error("Ошибка открытия PDF:", error);
     }
   };
 
@@ -29,10 +50,14 @@ const FileScreen = () => {
     <SafeAreaView style={styles.container}>
       <Title>FileScreen</Title>
 
-      {!pdfUri ? (
-        <MyButton onPress={pickPdf}>Open (pdf)</MyButton>
-      ) : (
-        <WebView source={{ uri: pdfUri }} style={styles.webview} />
+      <MyButton onPress={pickDocument}>Open file</MyButton>
+      {/* {fileUri && <Pdf source={{ uri: fileUri }} style={styles.webview} />} */}
+      {fileContent && (
+        <WebView
+          originWhitelist={["*"]}
+          source={{ html: `<pre>${fileContent}</pre>` }}
+          style={styles.webview}
+        />
       )}
     </SafeAreaView>
   );
@@ -48,6 +73,6 @@ const styles = StyleSheet.create({
   },
   webview: {
     flex: 1,
-    width: "100%",
+    width: Dimensions.get("screen").width,
   },
 });
